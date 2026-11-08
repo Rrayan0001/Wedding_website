@@ -1,0 +1,17 @@
+
+# Dependencies and builds
+node_modules/
+.next/
+out/
+.DS_Store
+tsconfig.tsbuildinfo
+
+# RSVP data (contains guest submissions)
+data/
+wedding-invitation/data/
+
+# Dev server logs
+*.log
+
+# Root duplicate audio (already served from wedding-invitation/public/assets/)
+/*.mp3

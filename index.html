@@ -1,0 +1,2544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Dr. Rabiya Sultana & Dr. Suhail Ahmed | Wedding Invitation</title>
+
+  <!-- Google Fonts: Great Vibes, Cinzel, Cormorant Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <!-- GSAP 3.12.5 & ScrollTrigger pinned from cdnjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ===== 1. TOKENS (Softened rich cream background, deep royal palette) ===== */
+    :root {
+      --burgundy-deep: #2c0610;
+      --burgundy: #4a0d1d;
+      --maroon: #6e172c;
+      --wine: #8a2039;
+      --rose: #b5455f;
+      --gold: #c9a15b;
+      --gold-light: #f3e5ab;
+      --gold-dark: #8c6d33;
+      --cream: #f4ecdf;
+      --cream-dark: #ebd9c5;
+      --blush: #ead8d0;
+      --ink: #321319;
+
+      --ease-out-soft: cubic-bezier(.22, 1, .36, 1);
+      --ease-in-out-silk: cubic-bezier(.65, 0, .35, 1);
+    }
+
+    /* ===== 2. BASE ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--burgundy-deep);
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 50% 30%, var(--burgundy) 0%, var(--burgundy-deep) 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Lock scrolling while welcome animation runs */
+    body.locked {
+      overflow: hidden;
+      height: 100vh;
+      height: 100dvh;
+      touch-action: none;
+    }
+
+    /* Desktop outer decorative backdrop */
+    .desktop-backdrop {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(201, 161, 91, 0.07) 0%, transparent 45%),
+        radial-gradient(circle at 85% 50%, rgba(201, 161, 91, 0.07) 0%, transparent 45%);
+    }
+
+    /* Mobile-first central column */
+    .phone-viewport {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 50% 30%, #fbf6ef 0%, var(--cream) 65%, var(--cream-dark) 100%);
+      position: relative;
+      z-index: 2;
+      box-shadow: 
+        0 0 0 1px rgba(201, 161, 91, 0.3),
+        0 25px 80px rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+    }
+
+    /* Subtle paper-grain noise overlay */
+    .paper-grain {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 90;
+      opacity: 0.045;
+    }
+
+    /* Top Scroll Progress Bar */
+    .scroll-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold));
+      transform-origin: 0% 50%;
+      transform: scaleX(0);
+      z-index: 100;
+      box-shadow: 0 1px 6px rgba(201, 161, 91, 0.6);
+    }
+
+    /* Gold Foil Text Effect */
+    .gold-foil {
+      background: linear-gradient(110deg, #755620 0%, #c9a15b 22%, #9b2b44 45%, #c9a15b 68%, #755620 100%);
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: foilShimmer 7s linear infinite;
+      filter: drop-shadow(0 1px 2px rgba(58, 10, 22, 0.12));
+    }
+
+    .gold-foil-light {
+      background: linear-gradient(110deg, #c9a15b 0%, #fff6d6 30%, #e6c580 55%, #fff6d6 80%, #c9a15b 100%);
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: foilShimmer 7s linear infinite;
+    }
+
+    @keyframes foilShimmer {
+      0% { background-position: 0% center; }
+      100% { background-position: 220% center; }
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--gold-light);
+      outline-offset: 4px;
+    }
+
+    /* ===== 3. BUTTONS (Royal Luxury Buttons) ===== */
+    .btn-gold {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      padding: 15px 32px;
+      min-height: 54px;
+      border: 2px solid transparent;
+      border-radius: 999px;
+      color: #fff9e6;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      text-shadow: 0 1px 3px rgba(20, 2, 7, 0.9);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 48%, rgba(0, 0, 0, 0.3) 100%) padding-box,
+        radial-gradient(ellipse at 50% 0%, #8a2039 0%, #5a1022 58%, #2c0610 100%) padding-box,
+        linear-gradient(135deg, #fff5d1 0%, #d4af63 25%, #8c6d33 50%, #f3e5ab 75%, #8c6d33 100%) border-box;
+      box-shadow:
+        0 4px 10px rgba(25, 2, 8, 0.6),
+        0 12px 26px rgba(74, 13, 29, 0.45),
+        0 0 22px rgba(201, 161, 91, 0.38),
+        inset 0 1px 1px rgba(255, 248, 220, 0.5),
+        inset 0 -3px 7px rgba(24, 2, 8, 0.65);
+      overflow: hidden;
+      transition: transform 0.3s var(--ease-out-soft), box-shadow 0.3s var(--ease-out-soft);
+      user-select: none;
+      z-index: 2;
+    }
+
+    .btn-gold span {
+      position: relative;
+      z-index: 2;
+      color: #fff6d6;
+    }
+
+    .btn-gold::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 999px;
+      border: 1px solid rgba(243, 229, 171, 0.48);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .btn-gold::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 48%;
+      height: 100%;
+      background: linear-gradient(100deg, transparent 0%, rgba(255, 248, 220, 0.55) 50%, transparent 100%);
+      transform: skewX(-22deg);
+      animation: shimmer 3.4s infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes shimmer {
+      0%, 58% { left: -75%; }
+      100% { left: 145%; }
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 6px 14px rgba(25, 2, 8, 0.65),
+        0 16px 32px rgba(74, 13, 29, 0.55),
+        0 0 28px rgba(243, 229, 171, 0.58),
+        inset 0 1px 2px rgba(255, 255, 255, 0.55),
+        inset 0 -3px 7px rgba(24, 2, 8, 0.65);
+    }
+
+    .btn-gold:active {
+      transform: scale(0.96);
+    }
+
+    /* Secondary Directions Pill Button */
+    .btn-directions {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 24px;
+      min-height: 46px;
+      border: 1.5px solid transparent;
+      border-radius: 999px;
+      color: #fff6d6;
+      font-family: 'Cinzel', serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      text-shadow: 0 1px 2px rgba(25, 2, 8, 0.85);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 52%) padding-box,
+        linear-gradient(135deg, #741930 0%, #3a0814 100%) padding-box,
+        linear-gradient(135deg, #f3e5ab 0%, #c9a15b 50%, #8c6d33 100%) border-box;
+      box-shadow:
+        0 6px 16px rgba(74, 13, 29, 0.22),
+        0 2px 4px rgba(44, 6, 16, 0.18),
+        inset 0 1px 1px rgba(255, 243, 202, 0.38);
+      overflow: hidden;
+      transition: all 0.32s var(--ease-out-soft);
+    }
+
+    .btn-directions span {
+      position: relative;
+      z-index: 2;
+      color: #fff6d6;
+    }
+
+    .btn-directions::before {
+      content: '';
+      position: absolute;
+      inset: 2.5px;
+      border-radius: 999px;
+      border: 1px solid rgba(243, 229, 171, 0.32);
+      pointer-events: none;
+    }
+
+    .btn-directions::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(100deg, transparent, rgba(255, 245, 210, 0.45), transparent);
+      transform: skewX(-20deg);
+      animation: shimmer 3.8s infinite;
+      pointer-events: none;
+    }
+
+    .btn-directions:hover,
+    .btn-directions:active {
+      transform: translateY(-2px);
+      box-shadow:
+        0 10px 22px rgba(74, 13, 29, 0.34),
+        0 0 15px rgba(201, 161, 91, 0.4);
+    }
+
+    .btn-directions:active {
+      transform: scale(0.96);
+    }
+
+    .btn-directions .pin-icon {
+      width: 15px;
+      height: 15px;
+      stroke: #f3e5ab;
+      transition: transform 0.3s var(--ease-out-soft);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .star-sparkle {
+      width: 13px;
+      height: 13px;
+      fill: #fff3ca;
+      filter: drop-shadow(0 0 4px rgba(243, 229, 171, 0.85));
+      animation: starTwinkle 2.2s ease-in-out infinite alternate;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .star-sparkle.delay {
+      animation-delay: 1.1s;
+    }
+    @keyframes starTwinkle {
+      0% { transform: scale(0.8) rotate(0deg); opacity: 0.75; }
+      100% { transform: scale(1.2) rotate(22deg); opacity: 1; }
+    }
+
+    .touch-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(243, 229, 171, 0.55) 0%, rgba(201, 161, 91, 0) 70%);
+      transform: scale(0);
+      pointer-events: none;
+      width: 120px;
+      height: 120px;
+      margin-left: -60px;
+      margin-top: -60px;
+      z-index: 3;
+    }
+
+    /* ===== 4. INTRO / ENVELOPE (Enhanced Sophisticated Welcome) ===== */
+    #intro-screen {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 50;
+      background: radial-gradient(ellipse at 50% 42%, var(--maroon) 0%, var(--burgundy) 55%, var(--burgundy-deep) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .intro-damask {
+      position: absolute;
+      inset: 0;
+      opacity: 0.055;
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23f3e5ab' stroke-width='1'%3E%3Cpath d='M40 8 C46 22 58 34 72 40 C58 46 46 58 40 72 C34 58 22 46 8 40 C22 34 34 22 40 8 Z'/%3E%3Ccircle cx='40' cy='40' r='8'/%3E%3Ccircle cx='40' cy='40' r='3' fill='%23f3e5ab'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .intro-vignette {
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 120px rgba(10, 1, 4, 0.9);
+      pointer-events: none;
+    }
+
+    #intro-dust-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .cream-wipe-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 60px;
+      height: 60px;
+      margin-left: -30px;
+      margin-top: -30px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--cream) 55%, rgba(244, 236, 223, 0) 100%);
+      transform: scale(0);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 25;
+    }
+
+    .cordially-text {
+      font-family: 'Cinzel', serif;
+      font-size: 11.5px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 24px;
+      text-align: center;
+      opacity: 0.9;
+      z-index: 10;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
+    }
+
+    .envelope-stage {
+      position: relative;
+      width: min(320px, 88vw);
+      height: 218px;
+      perspective: 1200px;
+      z-index: 10;
+      margin-bottom: 34px;
+      cursor: pointer;
+    }
+
+    .envelope-god-rays {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 420px;
+      height: 420px;
+      margin-left: -210px;
+      margin-top: -210px;
+      border-radius: 50%;
+      background: repeating-conic-gradient(
+        from 0deg,
+        rgba(243, 229, 171, 0.22) 0deg 8deg,
+        transparent 8deg 20deg
+      );
+      mask-image: radial-gradient(circle, rgba(0,0,0,1) 12%, rgba(0,0,0,0) 70%);
+      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 12%, rgba(0,0,0,0) 70%);
+      opacity: 0;
+      transform: scale(0.4) rotate(0deg);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+
+    .envelope-ground-shadow {
+      position: absolute;
+      bottom: -24px;
+      left: 10%;
+      width: 80%;
+      height: 22px;
+      background: radial-gradient(ellipse at center, rgba(10, 1, 4, 0.8) 0%, transparent 72%);
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .envelope-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #591122 0%, var(--burgundy-deep) 100%);
+      border: 1.5px solid var(--gold);
+      box-shadow: 
+        0 16px 36px rgba(14, 2, 5, 0.75),
+        0 4px 10px rgba(0, 0, 0, 0.45),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .envelope-liner {
+      position: absolute;
+      inset: 4px;
+      border-radius: 5px;
+      border: 1px solid rgba(201, 161, 91, 0.42);
+      background-color: #511020;
+      background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 2 L30 16 L16 30 L2 16 Z' fill='none' stroke='%23c9a15b' stroke-width='0.6' stroke-opacity='0.35'/%3E%3Ccircle cx='16' cy='16' r='3' fill='none' stroke='%23f3e5ab' stroke-width='0.5' stroke-opacity='0.3'/%3E%3C/svg%3E");
+    }
+
+    .envelope-light-burst {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      width: 240px;
+      height: 240px;
+      margin-left: -120px;
+      margin-top: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(243, 229, 171, 0.95) 0%, rgba(201, 161, 91, 0.45) 38%, transparent 72%);
+      transform: scale(0.2);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 4;
+      mix-blend-mode: screen;
+    }
+
+    .rising-card {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      top: 14px;
+      height: 188px;
+      background: radial-gradient(circle at 50% 30%, #fffdfa 0%, var(--cream) 75%, var(--blush) 100%);
+      border-radius: 6px;
+      border: 1.5px solid var(--gold);
+      box-shadow: 0 6px 18px rgba(30, 4, 10, 0.35);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 10px;
+      transform: scale(0.9);
+      transform-origin: center center;
+      overflow: hidden;
+    }
+
+    .rising-card::before {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba(201, 161, 91, 0.55);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .card-monogram-crest {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 2.8px;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+
+    .card-calligraphy-wrap {
+      position: relative;
+      clip-path: inset(0 100% 0 0);
+      padding: 4px 6px;
+      max-width: 100%;
+    }
+
+    .card-calligraphy-names {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(24px, 6.8vw, 30px);
+      line-height: 1.18;
+      white-space: nowrap;
+      text-align: center;
+      background: linear-gradient(110deg, #6e5220 0%, #c9a15b 25%, #6e172c 50%, #c9a15b 75%, #6e5220 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .card-date-mini {
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--maroon);
+      margin-top: 5px;
+      opacity: 0.85;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .envelope-pocket {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      pointer-events: none;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .envelope-pocket-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 126px;
+      transform-origin: top center;
+      transform-style: preserve-3d;
+      z-index: 8;
+      pointer-events: none;
+    }
+
+    .flap-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .flap-front {
+      z-index: 2;
+      filter: drop-shadow(0 6px 10px rgba(14, 2, 5, 0.45));
+    }
+
+    .flap-back {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .seal-assembly {
+      position: absolute;
+      top: 112px;
+      left: 50%;
+      width: 72px;
+      height: 72px;
+      margin-left: -36px;
+      margin-top: -36px;
+      z-index: 12;
+      pointer-events: none;
+    }
+
+    .seal-ripple-ring {
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-light);
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    .seal-warm-pulse {
+      position: absolute;
+      inset: -12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(243, 229, 171, 0.9) 0%, rgba(201, 161, 91, 0) 70%);
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    .seal-glow-breathing {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(243, 229, 171, 0.55) 0%, rgba(201, 161, 91, 0) 70%);
+      opacity: 0.65;
+    }
+
+    .seal-crack-line {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 15;
+      opacity: 0;
+      pointer-events: none;
+      filter: drop-shadow(0 0 6px #fff6d6);
+    }
+
+    .seal-half {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 5px 10px rgba(14, 2, 5, 0.6));
+    }
+
+    .seal-half-left {
+      clip-path: polygon(0% 0%, 53% 0%, 46% 35%, 55% 66%, 47% 100%, 0% 100%);
+    }
+
+    .seal-half-right {
+      clip-path: polygon(53% 0%, 100% 0%, 100% 100%, 47% 100%, 55% 66%, 46% 35%);
+    }
+
+    .intro-cta-wrap {
+      position: relative;
+      z-index: 12;
+      margin-top: 6px;
+    }
+
+    #skip-intro-btn {
+      position: absolute;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(44, 6, 16, 0.6);
+      border: 1px solid rgba(243, 229, 171, 0.35);
+      border-radius: 999px;
+      padding: 6px 16px;
+      color: var(--gold-light);
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+      cursor: pointer;
+      z-index: 30;
+    }
+
+    /* ===== 5. HERO ARCH (Optimized spacing & no mobile text overlap) ===== */
+    #hero-section {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 24px 10px 42px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 25%, #fffdfa 0%, var(--cream) 65%, var(--blush) 100%);
+    }
+
+    .floral-corner {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.9;
+    }
+
+    .floral-top-left {
+      top: -6px;
+      left: -6px;
+      transform-origin: 0% 0%;
+      animation: floralSwayLeft 6s ease-in-out infinite alternate;
+    }
+
+    .floral-bottom-right {
+      bottom: -6px;
+      right: -6px;
+      transform-origin: 100% 100%;
+      animation: floralSwayRight 6.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes floralSwayLeft {
+      0% { transform: rotate(-1.5deg) scale(1); }
+      100% { transform: rotate(1.8deg) scale(1.02); }
+    }
+
+    @keyframes floralSwayRight {
+      0% { transform: rotate(1.5deg) scale(1); }
+      100% { transform: rotate(-1.8deg) scale(1.02); }
+    }
+
+    .lantern-wrap {
+      position: absolute;
+      top: -4px;
+      width: 40px;
+      height: 130px;
+      z-index: 4;
+      pointer-events: none;
+      transform-origin: 50% 0%;
+    }
+
+    .lantern-left {
+      left: 6px;
+    }
+
+    .lantern-right {
+      right: 6px;
+    }
+
+    .lantern-halo {
+      fill: url(#lanternHaloGrad);
+      transform-origin: center;
+    }
+
+    .hero-arch-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 396px;
+      min-height: 660px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 108px 16px 40px;
+      z-index: 3;
+    }
+
+    .hero-arch-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      width: 100%;
+      max-width: 330px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .bismillah-box {
+      margin-bottom: 12px;
+      opacity: 0;
+      padding: 0 4px;
+    }
+
+    .bismillah-arabic {
+      font-size: clamp(19px, 5.2vw, 23px);
+      color: var(--maroon);
+      letter-spacing: 0.5px;
+      margin-bottom: 3px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .bismillah-english {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 12.5px;
+      color: var(--gold-dark);
+      letter-spacing: 0.3px;
+      line-height: 1.35;
+    }
+
+    .invite-lines-group {
+      margin-bottom: 12px;
+      color: var(--ink);
+      width: 100%;
+    }
+
+    .invite-line {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(9px, 2.5vw, 10.5px);
+      font-weight: 600;
+      letter-spacing: 1.1px;
+      line-height: 1.6;
+      color: var(--ink);
+      margin-bottom: 2px;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .couple-names-block {
+      margin: 2px 0 10px;
+      width: 100%;
+    }
+
+    .hero-name-wipe {
+      clip-path: inset(0 100% 0 0);
+      padding: 2px 2px;
+    }
+
+    .couple-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(32px, 9.2vw, 42px);
+      line-height: 1.18;
+      font-weight: 400;
+      padding: 2px 4px;
+      word-break: keep-all;
+    }
+
+    .couple-ampersand {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--maroon);
+      margin: 4px 0;
+      opacity: 0;
+      transform: scale(0.5);
+    }
+
+    .ornamental-divider {
+      width: 180px;
+      height: 22px;
+      margin: 2px auto 14px;
+      display: block;
+    }
+
+    .hero-cta-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      margin-top: 2px;
+    }
+
+    .scroll-chevron {
+      width: 20px;
+      height: 20px;
+      stroke: var(--gold-dark);
+      animation: chevronBounce 1.8s ease-in-out infinite;
+    }
+
+    @keyframes chevronBounce {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(5px); opacity: 1; }
+    }
+
+    /* ===== 6. SECTIONS ===== */
+    .wedding-section {
+      position: relative;
+      padding: 48px 16px;
+      text-align: center;
+      z-index: 3;
+    }
+
+    .section-header {
+      margin-bottom: 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .section-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 2.8px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 5px;
+    }
+
+    .section-title-wipe {
+      clip-path: inset(0 100% 0 0);
+      padding: 4px 8px;
+      max-width: 100%;
+    }
+
+    .section-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(32px, 9vw, 40px);
+      line-height: 1.22;
+      font-weight: 400;
+    }
+
+    .section-divider-wrap {
+      position: relative;
+      width: 170px;
+      height: 22px;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .divider-center-sparkle {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      transform: scale(0);
+    }
+
+    .save-date-card {
+      position: relative;
+      background: rgba(251, 246, 239, 0.95);
+      border-radius: 14px;
+      padding: 26px 16px;
+      max-width: 366px;
+      margin: 0 auto 26px;
+      box-shadow:
+        0 12px 30px rgba(74, 13, 29, 0.08),
+        inset 0 0 22px rgba(201, 161, 91, 0.12);
+    }
+
+    .save-date-border-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .islamic-date-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 16.5px;
+      font-weight: 600;
+      color: var(--maroon);
+      margin-bottom: 6px;
+    }
+
+    .main-wedding-date {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(14px, 4.1vw, 17.5px);
+      font-weight: 700;
+      color: var(--burgundy-deep);
+      letter-spacing: 1.1px;
+      margin-bottom: 6px;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
+    .date-char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .wedding-city-tag {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15.5px;
+      font-weight: 600;
+      color: var(--gold-dark);
+      letter-spacing: 0.5px;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      max-width: 366px;
+      margin: 0 auto;
+    }
+
+    .countdown-box {
+      background: linear-gradient(180deg, #fffdfa 0%, #f4eae4 100%);
+      border: 1px solid rgba(201, 161, 91, 0.6);
+      border-radius: 10px;
+      padding: 12px 4px 10px;
+      box-shadow:
+        0 6px 18px rgba(74, 13, 29, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .digit-roller-window {
+      height: 28px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .digit-value {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(18px, 5vw, 22px);
+      font-weight: 700;
+      color: var(--maroon);
+      line-height: 1;
+      display: inline-block;
+    }
+
+    .countdown-label {
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px;
+      font-weight: 600;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-top: 5px;
+    }
+
+    .timeline-container {
+      position: relative;
+      max-width: 376px;
+      margin: 0 auto;
+      padding: 10px 0;
+    }
+
+    .timeline-track-bg {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      margin-left: -1px;
+      background: rgba(201, 161, 91, 0.25);
+      z-index: 1;
+    }
+
+    .timeline-line-progress {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      margin-left: -1px;
+      background: linear-gradient(180deg, var(--gold-dark), var(--gold), var(--maroon));
+      transform-origin: top center;
+      transform: scaleY(0);
+      z-index: 2;
+      box-shadow: 0 0 8px rgba(201, 161, 91, 0.6);
+    }
+
+    .itinerary-item {
+      position: relative;
+      z-index: 3;
+      margin-bottom: 34px;
+      padding-top: 16px;
+    }
+
+    .itinerary-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 14px;
+      height: 14px;
+      margin-left: -7px;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 2.5px solid var(--gold);
+      box-shadow: 0 0 0 4px rgba(244, 236, 223, 0.9);
+      transition: all 0.4s ease;
+      z-index: 4;
+    }
+
+    .timeline-dot.active {
+      background: var(--maroon);
+      border-color: var(--gold-light);
+      box-shadow:
+        0 0 0 4px rgba(201, 161, 91, 0.28),
+        0 0 14px rgba(201, 161, 91, 0.85);
+      transform: scale(1.15);
+    }
+
+    .event-card {
+      position: relative;
+      background: rgba(251, 246, 239, 0.94);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(201, 161, 91, 0.55);
+      border-radius: 14px;
+      padding: 24px 18px 22px;
+      box-shadow:
+        0 12px 30px rgba(74, 13, 29, 0.08),
+        inset 0 0 22px rgba(255, 255, 255, 0.65);
+      overflow: hidden;
+    }
+
+    .event-card-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--burgundy-deep), var(--maroon), var(--gold), var(--maroon), var(--burgundy-deep));
+      transform-origin: center;
+      transform: scaleX(0);
+    }
+
+    .event-icon-wrap {
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fffdfa 0%, var(--blush) 100%);
+      border: 1px solid rgba(201, 161, 91, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(74, 13, 29, 0.08);
+    }
+
+    .event-icon-svg {
+      width: 26px;
+      height: 26px;
+      fill: none;
+      stroke: var(--gold-dark);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .event-title {
+      font-family: 'Cinzel', serif;
+      font-size: 16.5px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--burgundy-deep);
+      margin-bottom: 6px;
+    }
+
+    .event-datetime {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--maroon);
+      line-height: 1.38;
+      margin-bottom: 8px;
+    }
+
+    .event-venue-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.32;
+      margin-bottom: 3px;
+    }
+
+    .event-venue-address {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      color: #523138;
+      line-height: 1.42;
+      margin-bottom: 16px;
+    }
+
+    .event-btn-wrap {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .palace-stage {
+      position: relative;
+      max-width: 380px;
+      margin: 4px auto 22px;
+      overflow: hidden;
+    }
+
+    .palace-sunset-glow {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      width: 240px;
+      height: 140px;
+      margin-left: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(243, 229, 171, 0.6) 0%, rgba(181, 69, 95, 0.14) 55%, transparent 75%);
+      pointer-events: none;
+      animation: sunsetPulse 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes sunsetPulse {
+      0% { transform: scale(0.95); opacity: 0.75; }
+      100% { transform: scale(1.08); opacity: 1; }
+    }
+
+    .palace-svg {
+      position: relative;
+      width: 100%;
+      height: auto;
+      display: block;
+      z-index: 2;
+    }
+
+    .closing-message-box {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 17.5px;
+      line-height: 1.58;
+      color: var(--ink);
+      max-width: 335px;
+      margin: 0 auto 22px;
+    }
+
+    .closing-word {
+      display: inline-block;
+      margin-right: 4px;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .compliments-box {
+      padding-top: 8px;
+    }
+
+    .compliments-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 2.4px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 4px;
+    }
+
+    .compliments-names {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17.5px;
+      font-weight: 700;
+      color: var(--maroon);
+    }
+
+    .wedding-footer {
+      position: relative;
+      background: linear-gradient(180deg, var(--burgundy) 0%, var(--burgundy-deep) 100%);
+      padding: 32px 18px 38px;
+      text-align: center;
+      color: var(--gold-light);
+      overflow: hidden;
+    }
+
+    .footer-shimmer-edge {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold), var(--gold-dark));
+      background-size: 200% 100%;
+      animation: foilShimmer 5s linear infinite;
+    }
+
+    .footer-monogram {
+      font-family: 'Great Vibes', cursive;
+      font-size: 32px;
+      margin-bottom: 4px;
+    }
+
+    .footer-hashtag {
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px;
+      letter-spacing: 2.1px;
+      color: rgba(243, 229, 171, 0.78);
+      text-transform: uppercase;
+    }
+
+    #audio-toggle-btn {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      background: rgba(44, 6, 16, 0.85);
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 80;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.3s ease;
+    }
+
+    #audio-toggle-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ===== 7. PARTICLES (3D Rose Petals & Gold Dust) ===== */
+    #petal-stage {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 40;
+      overflow: hidden;
+      perspective: 800px;
+    }
+
+    .rose-petal-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .rose-petal-item.small {
+      width: 12px;
+      height: 15px;
+      filter: blur(0.8px);
+      opacity: 0.55;
+    }
+
+    .rose-petal-item.medium {
+      width: 17px;
+      height: 21px;
+      opacity: 0.82;
+    }
+
+    .rose-petal-item.large {
+      width: 22px;
+      height: 27px;
+      opacity: 0.92;
+      filter: drop-shadow(0 2px 4px rgba(44, 6, 16, 0.22));
+    }
+
+    .gold-dust-dot {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 6px var(--gold), 0 0 10px var(--gold-light);
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body class="locked">
+
+  <!-- Ambient Desktop Backdrop -->
+  <div class="desktop-backdrop" aria-hidden="true"></div>
+
+  <!-- Top Scroll Progress Line -->
+  <div class="scroll-progress-bar" id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Paper Grain Noise Overlay -->
+  <svg class="paper-grain" aria-hidden="true">
+    <filter id="paperNoiseFilter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.45 0" />
+    </filter>
+    <rect width="100%" height="100%" filter="url(#paperNoiseFilter)" />
+  </svg>
+
+  <!-- Shared SVG Gradients & Templates -->
+  <svg width="0" height="0" style="position:absolute; pointer-events:none;" aria-hidden="true">
+    <defs>
+      <linearGradient id="goldMetallicGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#8c6d33" />
+        <stop offset="30%" stop-color="#f3e5ab" />
+        <stop offset="55%" stop-color="#c9a15b" />
+        <stop offset="80%" stop-color="#f3e5ab" />
+        <stop offset="100%" stop-color="#8c6d33" />
+      </linearGradient>
+
+      <radialGradient id="waxGoldSealGrad" cx="35%" cy="30%" r="70%">
+        <stop offset="0%" stop-color="#f3e5ab" />
+        <stop offset="45%" stop-color="#c9a15b" />
+        <stop offset="85%" stop-color="#8c6d33" />
+        <stop offset="100%" stop-color="#5c4318" />
+      </radialGradient>
+
+      <radialGradient id="lanternHaloGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#f3e5ab" stop-opacity="0.95" />
+        <stop offset="45%" stop-color="#c9a15b" stop-opacity="0.45" />
+        <stop offset="100%" stop-color="#c9a15b" stop-opacity="0" />
+      </radialGradient>
+
+      <linearGradient id="petalRoseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ca5b75" />
+        <stop offset="55%" stop-color="#8a2039" />
+        <stop offset="100%" stop-color="#4a0d1d" />
+      </linearGradient>
+
+      <!-- Reusable 4-Point Sparkle Star -->
+      <symbol id="sparkle-star" viewBox="0 0 24 24">
+        <path d="M12 0 C13.5 8.5 15.5 10.5 24 12 C15.5 13.5 13.5 15.5 12 24 C10.5 15.5 8.5 13.5 0 12 C8.5 10.5 10.5 8.5 12 0 Z" />
+      </symbol>
+
+      <!-- Reusable Wax Seal Design -->
+      <g id="wax-seal-graphic">
+        <circle cx="34" cy="34" r="31" fill="url(#waxGoldSealGrad)" stroke="#8c6d33" stroke-width="1.2" />
+        <circle cx="34" cy="34" r="26" fill="none" stroke="#f3e5ab" stroke-width="0.9" stroke-dasharray="2 2" />
+        <circle cx="34" cy="34" r="23" fill="none" stroke="#6e5220" stroke-width="1" />
+        <text x="34" y="40" text-anchor="middle" font-family="'Cinzel', serif" font-size="18" fill="#3a0814" font-weight="700" letter-spacing="1">RS</text>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- 3D Rose Petals Layer -->
+  <div id="petal-stage" aria-hidden="true"></div>
+
+  <!-- =========================================================
+       WELCOME OVERLAY SCREEN (Enhanced 3D Envelope + Wax Seal)
+       ========================================================= -->
+  <section id="intro-screen" aria-label="Wedding Invitation Envelope">
+    <div class="intro-damask" aria-hidden="true"></div>
+    <div class="intro-vignette" aria-hidden="true"></div>
+    <div id="intro-dust-layer" aria-hidden="true"></div>
+
+    <div class="cream-wipe-circle" id="cream-wipe" aria-hidden="true"></div>
+
+    <p class="cordially-text" id="cordially-label">You are cordially invited</p>
+
+    <!-- 3D Envelope Stage -->
+    <div class="envelope-stage" id="envelope-stage">
+      <div class="envelope-god-rays" id="envelope-god-rays" aria-hidden="true"></div>
+      <div class="envelope-ground-shadow" id="envelope-shadow"></div>
+
+      <div class="envelope-wrapper" id="envelope-wrapper">
+        <div class="envelope-back">
+          <div class="envelope-liner"></div>
+        </div>
+
+        <div class="envelope-light-burst" id="envelope-light-burst"></div>
+
+        <!-- Rising Card -->
+        <div class="rising-card" id="rising-card">
+          <span class="card-monogram-crest">Wedding Celebrations</span>
+          <div class="card-calligraphy-wrap" id="card-calligraphy-wrap">
+            <div class="card-calligraphy-names">Dr. Rabiya &amp; Dr. Suhail</div>
+          </div>
+          <span class="card-date-mini">26 . 11 . 2026 &bull; 29 . 11 . 2026 &bull; 01 . 12 . 2026</span>
+        </div>
+
+        <!-- Envelope Front Pocket -->
+        <div class="envelope-pocket">
+          <svg class="envelope-pocket-svg" viewBox="0 0 316 216" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="pocketBurgundy" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#6e172c" />
+                <stop offset="100%" stop-color="#3a0814" />
+              </linearGradient>
+              <linearGradient id="pocketBottomGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#5a1022" />
+                <stop offset="100%" stop-color="#2c0610" />
+              </linearGradient>
+            </defs>
+            <polygon points="0,0 158,118 0,216" fill="url(#pocketBurgundy)" stroke="url(#goldMetallicGrad)" stroke-width="1.2" />
+            <polygon points="316,0 158,118 316,216" fill="url(#pocketBurgundy)" stroke="url(#goldMetallicGrad)" stroke-width="1.2" />
+            <polygon points="0,216 128,108 188,108 316,216" fill="url(#pocketBottomGrad)" stroke="url(#goldMetallicGrad)" stroke-width="1.5" />
+            <rect x="6" y="6" width="304" height="204" rx="4" fill="none" stroke="url(#goldMetallicGrad)" stroke-width="1" stroke-opacity="0.7" />
+            <rect x="10" y="10" width="296" height="196" rx="3" fill="none" stroke="#f3e5ab" stroke-width="0.5" stroke-opacity="0.45" />
+            <g stroke="url(#goldMetallicGrad)" stroke-width="1" fill="none" opacity="0.75">
+              <path d="M16,200 C16,182 28,172 44,172 M16,200 C26,188 34,188 46,200" />
+              <circle cx="24" cy="192" r="2.5" fill="#f3e5ab" />
+              <path d="M300,200 C300,182 288,172 272,172 M300,200 C290,188 282,188 270,200" />
+              <circle cx="292" cy="192" r="2.5" fill="#f3e5ab" />
+            </g>
+          </svg>
+        </div>
+
+        <!-- Top 3D Flap -->
+        <div class="envelope-flap" id="envelope-flap">
+          <div class="flap-face flap-front">
+            <svg viewBox="0 0 316 126" width="100%" height="100%" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="flapOuterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#3a0814" />
+                  <stop offset="100%" stop-color="#5a1022" />
+                </linearGradient>
+              </defs>
+              <path d="M0,0 L316,0 L168,116 Q158,124 148,116 Z" fill="url(#flapOuterGrad)" stroke="url(#goldMetallicGrad)" stroke-width="1.6" />
+              <path d="M10,5 L306,5 L166,110 Q158,116 150,110 Z" fill="none" stroke="#f3e5ab" stroke-width="0.7" stroke-opacity="0.55" />
+            </svg>
+          </div>
+          <div class="flap-face flap-back">
+            <svg viewBox="0 0 316 126" width="100%" height="100%" preserveAspectRatio="none">
+              <path d="M0,0 L316,0 L168,116 Q158,124 148,116 Z" fill="#6e172c" stroke="url(#goldMetallicGrad)" stroke-width="1.5" />
+              <path d="M12,6 L304,6 L166,108 Q158,114 150,108 Z" fill="none" stroke="#f3e5ab" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Wax Seal -->
+        <div class="seal-assembly" id="seal-assembly">
+          <div class="seal-ripple-ring" id="seal-ripple-ring"></div>
+          <div class="seal-warm-pulse" id="seal-warm-pulse"></div>
+          <div class="seal-glow-breathing" id="seal-glow-breathing"></div>
+
+          <svg class="seal-crack-line" id="seal-crack-line" viewBox="0 0 68 68" aria-hidden="true">
+            <path d="M36,3 L31,24 L38,45 L32,65" fill="none" stroke="#fff9e6" stroke-width="2.2" stroke-linecap="round" />
+          </svg>
+
+          <div class="seal-half seal-half-left" id="seal-left">
+            <svg viewBox="0 0 68 68" width="100%" height="100%"><use href="#wax-seal-graphic" /></svg>
+          </div>
+          <div class="seal-half seal-half-right" id="seal-right">
+            <svg viewBox="0 0 68 68" width="100%" height="100%"><use href="#wax-seal-graphic" /></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="intro-cta-wrap">
+      <button type="button" class="btn-gold" id="tap-open-btn" aria-label="Tap to open wedding invitation">
+        <svg class="star-sparkle" aria-hidden="true"><use href="#sparkle-star" /></svg>
+        <span>TAP TO OPEN</span>
+        <svg class="star-sparkle delay" aria-hidden="true"><use href="#sparkle-star" /></svg>
+      </button>
+    </div>
+
+    <button type="button" id="skip-intro-btn" aria-label="Skip intro animation">Skip Intro &raquo;</button>
+  </section>
+
+  <!-- =========================================================
+       MAIN INVITATION COLUMN
+       ========================================================= -->
+  <main class="phone-viewport" id="main-invitation">
+
+    <!-- ================= HERO SECTION ================= -->
+    <section id="hero-section">
+      <!-- Floral Corner (Top Left) -->
+      <svg class="floral-corner floral-top-left" id="hero-floral-tl" viewBox="0 0 200 200" aria-hidden="true">
+        <g fill="none" stroke="#8c6d33" stroke-width="1.2" stroke-linecap="round">
+          <path d="M-5,-5 C35,25 75,40 135,28" /><path d="M25,18 C45,55 55,95 42,145" /><path d="M55,28 C85,55 110,75 150,72" /><path d="M38,75 C65,92 85,115 95,145" />
+        </g>
+        <g fill="#c9a15b" opacity="0.55">
+          <path d="M60,24 Q72,14 82,24 Q70,32 60,24 Z" /><path d="M35,55 Q20,65 26,78 Q40,68 35,55 Z" /><path d="M90,52 Q105,44 114,54 Q100,62 90,52 Z" /><path d="M55,92 Q70,88 76,100 Q62,104 55,92 Z" />
+        </g>
+        <g>
+          <circle cx="28" cy="24" r="14" fill="#b5455f" opacity="0.85" /><circle cx="28" cy="24" r="8" fill="#ead8d0" /><circle cx="28" cy="24" r="3.5" fill="#c9a15b" />
+          <circle cx="72" cy="48" r="11" fill="#8a2039" opacity="0.8" /><circle cx="72" cy="48" r="6" fill="#f4ecdf" /><circle cx="72" cy="48" r="2.5" fill="#c9a15b" />
+          <circle cx="115" cy="28" r="4.5" fill="#ffffff" stroke="#c9a15b" stroke-width="0.6" /><circle cx="132" cy="34" r="3.5" fill="#ead8d0" stroke="#c9a15b" stroke-width="0.6" />
+          <circle cx="124" cy="18" r="3.5" fill="#ffffff" stroke="#c9a15b" stroke-width="0.6" /><circle cx="145" cy="68" r="4" fill="#ffffff" stroke="#c9a15b" stroke-width="0.6" />
+          <circle cx="44" cy="128" r="4.5" fill="#ffffff" stroke="#c9a15b" stroke-width="0.6" /><circle cx="88" cy="135" r="4" fill="#ffffff" stroke="#c9a15b" stroke-width="0.6" />
+        </g>
+      </svg>
+
+      <!-- Floral Corner (Bottom Right) -->
+      <svg class="floral-corner floral-bottom-right" id="hero-floral-br" viewBox="0 0 200 200" aria-hidden="true">
+        <g transform="rotate(180 100 100)">
+          <g fill="none" stroke="#8c6d33" stroke-width="1.2" stroke-linecap="round">
+            <path d="M-5,-5 C35,25 75,40 135,28" /><path d="M25,18 C45,55 55,95 42,145" /><path d="M55,28 C85,55 110,75 150,72" />
+          </g>
+          <g fill="#c9a15b" opacity="0.55">
+            <path d="M60,24 Q72,14 82,24 Q70,32 60,24 Z" /><path d="M35,55 Q20,65 26,78 Q40,68 35,55 Z" /><path d="M90,52 Q105,44 114,54 Q100,62 90,52 Z" />
+          </g>
+          <circle cx="28" cy="24" r="14" fill="#b5455f" opacity="0.85" /><circle cx="28" cy="24" r="8" fill="#ead8d0" /><circle cx="28" cy="24" r="3.5" fill="#c9a15b" />
+          <circle cx="72" cy="48" r="11" fill="#8a2039" opacity="0.8" /><circle cx="72" cy="48" r="6" fill="#f4ecdf" /><circle cx="115" cy="28" r="4.5" fill="#ffffff" stroke="#c9a15b" stroke-width="0.6" />
+        </g>
+      </svg>
+
+      <!-- Hanging Lantern (Left) -->
+      <svg class="lantern-wrap lantern-left" id="lantern-left" viewBox="0 0 64 195" aria-hidden="true">
+        <line x1="32" y1="0" x2="32" y2="78" stroke="url(#goldMetallicGrad)" stroke-width="1.4" />
+        <circle class="lantern-halo" cx="32" cy="128" r="32" />
+        <circle cx="32" cy="82" r="4" fill="none" stroke="url(#goldMetallicGrad)" stroke-width="1.5" />
+        <path d="M20,98 Q32,82 44,98 Z" fill="url(#goldMetallicGrad)" />
+        <polygon points="18,98 46,98 50,148 14,148" fill="#4a0d1d" stroke="url(#goldMetallicGrad)" stroke-width="1.6" />
+        <path class="lantern-flame" d="M22,144 L22,116 Q32,103 42,116 L42,144 Z" fill="#f3e5ab" opacity="0.9" />
+        <line x1="32" y1="98" x2="32" y2="148" stroke="#c9a15b" stroke-width="0.9" />
+        <line x1="16" y1="123" x2="48" y2="123" stroke="#c9a15b" stroke-width="0.9" />
+        <polygon points="14,148 50,148 40,158 24,158" fill="url(#goldMetallicGrad)" />
+        <path d="M32,158 L35,166 L32,172 L29,166 Z" fill="#c9a15b" />
+      </svg>
+
+      <!-- Hanging Lantern (Right) -->
+      <svg class="lantern-wrap lantern-right" id="lantern-right" viewBox="0 0 64 195" aria-hidden="true">
+        <line x1="32" y1="0" x2="32" y2="62" stroke="url(#goldMetallicGrad)" stroke-width="1.4" />
+        <circle class="lantern-halo" cx="32" cy="112" r="32" />
+        <circle cx="32" cy="66" r="4" fill="none" stroke="url(#goldMetallicGrad)" stroke-width="1.5" />
+        <path d="M20,82 Q32,66 44,82 Z" fill="url(#goldMetallicGrad)" />
+        <polygon points="18,82 46,82 50,132 14,132" fill="#4a0d1d" stroke="url(#goldMetallicGrad)" stroke-width="1.6" />
+        <path class="lantern-flame" d="M22,128 L22,100 Q32,87 42,100 L42,128 Z" fill="#f3e5ab" opacity="0.9" />
+        <line x1="32" y1="82" x2="32" y2="132" stroke="#c9a15b" stroke-width="0.9" />
+        <line x1="16" y1="107" x2="48" y2="107" stroke="#c9a15b" stroke-width="0.9" />
+        <polygon points="14,132 50,132 40,142 24,142" fill="url(#goldMetallicGrad)" />
+        <path d="M32,142 L35,150 L32,156 L29,150 Z" fill="#c9a15b" />
+      </svg>
+
+      <!-- Pointed Arch Frame -->
+      <div class="hero-arch-wrapper" id="hero-arch-wrapper">
+        <svg class="hero-arch-svg" viewBox="0 0 380 660" preserveAspectRatio="none" aria-hidden="true">
+          <path id="arch-fill-path"
+            d="M 14,646 L 14,210 C 14,105 135,58 190,16 C 245,58 366,105 366,210 L 366,646 Z"
+            fill="#f4ecdf" fill-opacity="0" />
+          <path id="arch-outer-stroke"
+            d="M 14,646 L 14,210 C 14,105 135,58 190,16 C 245,58 366,105 366,210 L 366,646 L 14,646"
+            fill="none" stroke="url(#goldMetallicGrad)" stroke-width="2.4" stroke-linecap="round" />
+          <path id="arch-inner-stroke"
+            d="M 22,638 L 22,212 C 22,114 138,68 190,28 C 242,68 358,114 358,212 L 358,638 L 22,638"
+            fill="none" stroke="#c9a15b" stroke-width="1" stroke-opacity="0.75" />
+          <g id="arch-peak-ornament" opacity="0">
+            <circle cx="190" cy="10" r="4" fill="#c9a15b" />
+            <path d="M184,18 Q190,4 196,18" fill="none" stroke="#8c6d33" stroke-width="1.2" />
+          </g>
+        </svg>
+
+        <!-- Hero Invitation Text Content Extracted From Your Image -->
+        <div class="hero-content">
+          <div class="bismillah-box" id="bismillah-box">
+            <div class="bismillah-arabic" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+            <div class="bismillah-english">In the name of Allah, the most beneficent and the most merciful</div>
+          </div>
+
+          <div class="invite-lines-group">
+            <p class="invite-line">WITH THE GRACE OF ALMIGHTY ALLAH</p>
+            <p class="invite-line">AND THE BLESSINGS OF OUR FAMILIES,</p>
+            <p class="invite-line">WE ARE DELIGHTED TO INVITE YOU TO</p>
+            <p class="invite-line">THE WEDDING CELEBRATIONS OF</p>
+          </div>
+
+          <div class="couple-names-block">
+            <div class="hero-name-wipe" id="bride-name-wipe">
+              <h1 class="couple-name gold-foil">Dr. Rabiya Sultana</h1>
+            </div>
+
+            <div class="couple-ampersand" id="hero-ampersand">&amp;</div>
+
+            <div class="hero-name-wipe" id="groom-name-wipe">
+              <h2 class="couple-name gold-foil">Dr. Suhail Ahmed</h2>
+            </div>
+          </div>
+
+          <!-- Ornamental Divider -->
+          <svg class="ornamental-divider" viewBox="0 0 220 26" aria-hidden="true">
+            <path class="hero-div-stroke" d="M110,13 L15,13" stroke="url(#goldMetallicGrad)" stroke-width="1.5" stroke-linecap="round" />
+            <path class="hero-div-stroke" d="M110,13 L205,13" stroke="url(#goldMetallicGrad)" stroke-width="1.5" stroke-linecap="round" />
+            <path class="hero-div-stroke" d="M110,4 L119,13 L110,22 L101,13 Z" fill="#f4ecdf" stroke="#c9a15b" stroke-width="1.4" />
+            <circle cx="110" cy="13" r="2.5" fill="#6e172c" />
+            <circle cx="65" cy="13" r="2" fill="#c9a15b" />
+            <circle cx="155" cy="13" r="2" fill="#c9a15b" />
+          </svg>
+
+          <!-- Explore Details CTA -->
+          <div class="hero-cta-box" id="hero-cta-box">
+            <a href="#save-the-date" class="btn-gold" id="explore-btn">
+              <svg class="star-sparkle" aria-hidden="true"><use href="#sparkle-star" /></svg>
+              <span>EXPLORE DETAILS</span>
+              <svg class="star-sparkle delay" aria-hidden="true"><use href="#sparkle-star" /></svg>
+            </a>
+            <svg class="scroll-chevron" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SAVE THE DATE & COUNTDOWN ================= -->
+    <section class="wedding-section" id="save-the-date">
+      <div class="section-header">
+        <span class="section-subtitle">Mark Your Calendar</span>
+        <div class="section-title-wipe">
+          <h2 class="section-title gold-foil">Save The Date</h2>
+        </div>
+        <div class="section-divider-wrap">
+          <svg viewBox="0 0 200 24" width="100%" height="100%" aria-hidden="true">
+            <path class="sec-div-line" d="M100,12 L15,12" stroke="url(#goldMetallicGrad)" stroke-width="1.5" stroke-linecap="round" />
+            <path class="sec-div-line" d="M100,12 L185,12" stroke="url(#goldMetallicGrad)" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <svg class="divider-center-sparkle" viewBox="0 0 24 24" fill="#c9a15b" aria-hidden="true"><use href="#sparkle-star" /></svg>
+        </div>
+      </div>
+
+      <div class="save-date-card" id="save-date-card">
+        <svg class="save-date-border-svg" viewBox="0 0 370 180" preserveAspectRatio="none" aria-hidden="true">
+          <rect id="save-date-rect-stroke" x="3" y="3" width="364" height="174" rx="12" ry="12" fill="none" stroke="url(#goldMetallicGrad)" stroke-width="2.2" />
+          <rect x="9" y="9" width="352" height="162" rx="8" ry="8" fill="none" stroke="#c9a15b" stroke-width="0.8" stroke-opacity="0.5" />
+        </svg>
+
+        <p class="islamic-date-line">Nikah Ceremony &bull; Main Event</p>
+        <div class="main-wedding-date" id="stagger-date-text" aria-label="Sunday, 29th November 2026">
+          Sunday, 29th November 2026
+        </div>
+        <p class="wedding-city-tag">11:30 AM &bull; Bangalore Palace, Bengaluru</p>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown-grid" id="countdown-grid" aria-label="Countdown to wedding">
+        <div class="countdown-box"><div class="digit-roller-window"><span class="digit-value" id="cd-days">00</span></div><div class="countdown-label">Days</div></div>
+        <div class="countdown-box"><div class="digit-roller-window"><span class="digit-value" id="cd-hours">00</span></div><div class="countdown-label">Hours</div></div>
+        <div class="countdown-box"><div class="digit-roller-window"><span class="digit-value" id="cd-mins">00</span></div><div class="countdown-label">Minutes</div></div>
+        <div class="countdown-box" id="cd-secs-box"><div class="digit-roller-window"><span class="digit-value" id="cd-secs">00</span></div><div class="countdown-label">Seconds</div></div>
+      </div>
+    </section>
+
+    <!-- ================= WEDDING ITINERARY ================= -->
+    <section class="wedding-section" id="itinerary-section">
+      <div class="section-header">
+        <span class="section-subtitle">Celebration Moments</span>
+        <div class="section-title-wipe">
+          <h2 class="section-title gold-foil">Wedding Itinerary</h2>
+        </div>
+        <div class="section-divider-wrap">
+          <svg viewBox="0 0 200 24" width="100%" height="100%" aria-hidden="true">
+            <path class="sec-div-line" d="M100,12 L15,12" stroke="url(#goldMetallicGrad)" stroke-width="1.5" stroke-linecap="round" />
+            <path class="sec-div-line" d="M100,12 L185,12" stroke="url(#goldMetallicGrad)" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <svg class="divider-center-sparkle" viewBox="0 0 24 24" fill="#c9a15b" aria-hidden="true"><use href="#sparkle-star" /></svg>
+        </div>
+      </div>
+
+      <div class="timeline-container" id="timeline-container">
+        <div class="timeline-track-bg" aria-hidden="true"></div>
+        <div class="timeline-line-progress" id="timeline-line-progress" aria-hidden="true"></div>
+
+        <!-- Event 1: HALDI & SHUKRANA -->
+        <div class="itinerary-item" data-side="left">
+          <div class="timeline-dot"></div>
+          <article class="event-card">
+            <div class="event-card-accent"></div>
+            <div class="event-icon-wrap">
+              <svg class="event-icon-svg" viewBox="0 0 36 36" aria-hidden="true">
+                <path class="icon-stroke" d="M6,14 L30,14 C30,22 24,28 18,28 C12,28 6,22 6,14 Z" />
+                <path class="icon-stroke" d="M11,10 L25,4" />
+              </svg>
+            </div>
+            <h3 class="event-title">HALDI &amp; SHUKRANA</h3>
+            <p class="event-datetime">26<sup>th</sup> &amp; 27<sup>th</sup> November 2026<br>Evening</p>
+            <p class="event-venue-name">At Our Residence</p>
+            <p class="event-venue-address">Moin Manzil, Mujawar Mohalla,<br>Mulbagal, Kolar</p>
+            <div class="event-btn-wrap">
+              <a href="https://www.google.com/maps/search/?api=1&query=Mujawar+Mohalla+Mulbagal+Kolar+563131" target="_blank" rel="noopener noreferrer" class="btn-directions">
+                <svg class="pin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>GET DIRECTIONS</span>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Event 2: NIKAH -->
+        <div class="itinerary-item" data-side="right">
+          <div class="timeline-dot"></div>
+          <article class="event-card">
+            <div class="event-card-accent"></div>
+            <div class="event-icon-wrap">
+              <svg class="event-icon-svg" viewBox="0 0 36 36" aria-hidden="true">
+                <circle class="icon-stroke" cx="14" cy="21" r="7.5" />
+                <circle class="icon-stroke" cx="22" cy="21" r="7.5" />
+                <path class="icon-stroke" d="M14,13.5 L11.5,9.5 L14,7.5 L16.5,9.5 Z" />
+              </svg>
+            </div>
+            <h3 class="event-title">NIKAH</h3>
+            <p class="event-datetime">Sunday, 29<sup>th</sup> November 2026<br>at 11:30 AM<br><span style="font-weight: 400; font-style: italic; font-size: 15.5px;">Lunch thereafter</span></p>
+            <p class="event-venue-name">Tennis Pavilion, Bangalore Palace</p>
+            <p class="event-venue-address">#1 / 21, Palace Road,<br>Vasanth Nagar, Bengaluru &ndash; 560 006</p>
+            <div class="event-btn-wrap">
+              <a href="https://www.google.com/maps/search/?api=1&query=Tennis+Pavilion+Bangalore+Palace+Palace+Road+Bengaluru&query_place_id=ChIJ1USPfEQWrjsRNL4aJSJfWp4" target="_blank" rel="noopener noreferrer" class="btn-directions">
+                <svg class="pin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>GET DIRECTIONS</span>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Event 3: VALIMA -->
+        <div class="itinerary-item" data-side="left">
+          <div class="timeline-dot"></div>
+          <article class="event-card">
+            <div class="event-card-accent"></div>
+            <div class="event-icon-wrap">
+              <svg class="event-icon-svg" viewBox="0 0 36 36" aria-hidden="true">
+                <path class="icon-stroke" d="M6,24 C6,15 11,11 18,11 C25,11 30,15 30,24 Z" />
+                <circle class="icon-stroke" cx="18" cy="8.5" r="2" />
+                <path class="icon-stroke" d="M3,24 L33,24" />
+                <path class="icon-stroke" d="M8,27.5 L28,27.5" />
+              </svg>
+            </div>
+            <h3 class="event-title">VALIMA</h3>
+            <p class="event-datetime">Tuesday, 1<sup>st</sup> December 2026<br>Dinner, 8:00 PM onwards</p>
+            <p class="event-venue-name">Palace Sheesh Mahal</p>
+            <p class="event-venue-address">Gate No. 7, Palace Grounds,<br>Ballari Main Road, Near Mekeri Circle, Bengaluru</p>
+            <div class="event-btn-wrap">
+              <a href="https://www.google.com/maps/search/?api=1&query=Palace+Sheesh+Mahal+Palace+Grounds+Bengaluru&query_place_id=ChIJvWVinTUWrjsRmvmiJwVYNbg" target="_blank" rel="noopener noreferrer" class="btn-directions">
+                <svg class="pin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>GET DIRECTIONS</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PALACE & CLOSING ================= -->
+    <section class="wedding-section" id="closing-section">
+      <div class="section-header">
+        <span class="section-subtitle">With Blessings &amp; Duas</span>
+        <div class="section-title-wipe">
+          <h2 class="section-title gold-foil">Awaiting Your Presence</h2>
+        </div>
+        <div class="section-divider-wrap">
+          <svg viewBox="0 0 200 24" width="100%" height="100%" aria-hidden="true">
+            <path class="sec-div-line" d="M100,12 L15,12" stroke="url(#goldMetallicGrad)" stroke-width="1.5" stroke-linecap="round" />
+            <path class="sec-div-line" d="M100,12 L185,12" stroke="url(#goldMetallicGrad)" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <svg class="divider-center-sparkle" viewBox="0 0 24 24" fill="#c9a15b" aria-hidden="true"><use href="#sparkle-star" /></svg>
+        </div>
+      </div>
+
+      <!-- Palace SVG Illustration -->
+      <div class="palace-stage" id="palace-stage">
+        <div class="palace-sunset-glow" aria-hidden="true"></div>
+        <svg class="palace-svg" viewBox="0 0 400 220" aria-hidden="true">
+          <g id="palace-fills" opacity="0">
+            <path d="M70,195 L70,110 L110,110 L110,95 L155,95 L155,75 L245,75 L245,95 L290,95 L290,110 L330,110 L330,195 Z" fill="#ead8d0" />
+            <path d="M168,75 C168,42 200,28 200,20 C200,28 232,42 232,75 Z" fill="#f3e5ab" opacity="0.55" />
+            <path d="M78,110 C78,88 94,78 94,72 C94,78 110,88 110,110 Z" fill="#f3e5ab" opacity="0.45" />
+            <path d="M290,110 C290,88 306,78 306,72 C306,78 322,88 322,110 Z" fill="#f3e5ab" opacity="0.45" />
+            <path d="M178,195 L178,142 C178,128 200,120 200,115 C200,120 222,128 222,142 L222,195 Z" fill="#6e172c" opacity="0.18" />
+          </g>
+          <g id="palace-strokes" fill="none" stroke="#8c6d33" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="15" y1="195" x2="385" y2="195" stroke-width="1.8" />
+            <line x1="35" y1="201" x2="365" y2="201" stroke="#c9a15b" stroke-width="1" />
+            <path d="M168,75 C168,42 200,28 200,20 C200,28 232,42 232,75" /><line x1="200" y1="20" x2="200" y2="9" /><circle cx="200" cy="14" r="2" />
+            <path d="M78,110 C78,88 94,78 94,72 C94,78 110,88 110,110" /><line x1="94" y1="72" x2="94" y2="63" />
+            <path d="M290,110 C290,88 306,78 306,72 C306,78 322,88 322,110" /><line x1="306" y1="72" x2="306" y2="63" />
+            <rect x="155" y="75" width="90" height="120" /><rect x="110" y="95" width="45" height="100" /><rect x="245" y="95" width="45" height="100" /><rect x="70" y="110" width="40" height="85" /><rect x="290" y="110" width="40" height="85" />
+          </g>
+          <g id="palace-birds-flock" fill="none" stroke="#6e172c" stroke-width="1.3" stroke-linecap="round">
+            <path d="M20,48 Q25,42 30,48 Q35,42 40,48" /><path d="M38,36 Q42,31 46,36 Q50,31 54,36" /><path d="M52,50 Q56,45 60,50 Q64,45 68,50" />
+          </g>
+        </svg>
+      </div>
+
+      <p class="closing-message-box" id="closing-quote">
+        With the grace of Almighty Allah and the blessings of our families, we await your gracious presence to share in our joy.
+      </p>
+
+      <div class="compliments-box">
+        <div class="compliments-label">Best Compliments From</div>
+        <div class="compliments-names">Family &amp; Relatives</div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="wedding-footer">
+      <div class="footer-shimmer-edge" aria-hidden="true"></div>
+      <div class="footer-monogram gold-foil-light">Dr. Rabiya &amp; Dr. Suhail</div>
+      <div class="footer-hashtag">RS &bull; Wedding Celebrations 2026</div>
+    </footer>
+
+  </main>
+
+  <!-- Audio Toggle Button -->
+  <button type="button" id="audio-toggle-btn" aria-label="Toggle background music">
+    <svg id="audio-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+    </svg>
+    <svg id="audio-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>
+    </svg>
+  </button>
+
+  <script>
+    // ===== 1. SETTINGS =====
+    const WEDDING_CONFIG = {
+      // Nikah target date: Sunday, Nov 29, 2026 at 11:30 AM IST
+      weddingDateISO: '2026-11-29T11:30:00+05:30',
+      musicPath: 'assets/music.mp3',
+      crackSoundPath: 'assets/wax-crack.mp3',
+      chimeSoundPath: 'assets/chime.mp3',
+      maxPetals: 20,
+      introDustCount: 14
+    };
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    gsap.registerPlugin(ScrollTrigger);
+
+    let idleTweens = [];
+    let welcomeTimeline = null;
+    let petalTweens = [];
+    let countdownValues = { days: '00', hours: '00', mins: '00', secs: '00' };
+
+    // ===== 2. HELPERS =====
+    function prepareSvgStroke(element) {
+      if (!element || typeof element.getTotalLength !== 'function') return 0;
+      const length = element.getTotalLength();
+      gsap.set(element, { strokeDasharray: length, strokeDashoffset: length });
+      return length;
+    }
+
+    function splitTextIntoChars(element) {
+      if (!element) return [];
+      const words = element.textContent.trim().split(/\s+/);
+      element.innerHTML = '';
+      const chars = [];
+      words.forEach((word, wIdx) => {
+        const wordWrap = document.createElement('span');
+        wordWrap.style.display = 'inline-block';
+        wordWrap.style.whiteSpace = 'nowrap';
+        for (let i = 0; i < word.length; i++) {
+          const span = document.createElement('span');
+          span.className = 'date-char';
+          span.textContent = word[i];
+          wordWrap.appendChild(span);
+          chars.push(span);
+        }
+        element.appendChild(wordWrap);
+        if (wIdx < words.length - 1) element.appendChild(document.createTextNode(' '));
+      });
+      return chars;
+    }
+
+    function splitTextIntoWords(element) {
+      if (!element) return [];
+      const words = element.textContent.trim().split(/\s+/);
+      element.innerHTML = '';
+      return words.map(word => {
+        const span = document.createElement('span');
+        span.className = 'closing-word';
+        span.textContent = word;
+        element.appendChild(span);
+        return span;
+      });
+    }
+
+    function setupButtonRipples() {
+      document.querySelectorAll('.btn-gold, .btn-directions').forEach(btn => {
+        btn.addEventListener('pointerdown', function(e) {
+          const rect = btn.getBoundingClientRect();
+          const ripple = document.createElement('span');
+          ripple.className = 'touch-ripple';
+          ripple.style.left = (e.clientX - rect.left) + 'px';
+          ripple.style.top = (e.clientY - rect.top) + 'px';
+          btn.appendChild(ripple);
+          gsap.to(ripple, { scale: 2.6, opacity: 0, duration: 0.6, ease: 'power2.out', onComplete: () => ripple.remove() });
+        });
+      });
+    }
+
+    // ===== 3. IDLE ANIMATIONS =====
+    function startIntroIdleAnimations() {
+      if (prefersReducedMotion) return;
+      idleTweens.push(
+        gsap.to('#envelope-wrapper', { y: -8, duration: 2, ease: 'sine.inOut', yoyo: true, repeat: -1 }),
+        gsap.to('#envelope-shadow', { scaleX: 0.88, scaleY: 0.85, opacity: 0.45, duration: 2, ease: 'sine.inOut', yoyo: true, repeat: -1 }),
+        gsap.to('#seal-glow-breathing', { scale: 1.28, opacity: 0.9, duration: 1.8, ease: 'sine.inOut', yoyo: true, repeat: -1 }),
+        gsap.to('#cordially-label', { opacity: 0.45, duration: 2.2, ease: 'sine.inOut', yoyo: true, repeat: -1 })
+      );
+
+      const dustLayer = document.getElementById('intro-dust-layer');
+      for (let i = 0; i < WEDDING_CONFIG.introDustCount; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'gold-dust-dot';
+        const size = gsap.utils.random(2, 4);
+        dot.style.width = size + 'px';
+        dot.style.height = size + 'px';
+        dot.style.left = gsap.utils.random(6, 94) + '%';
+        dot.style.top = gsap.utils.random(10, 95) + '%';
+        dustLayer.appendChild(dot);
+        idleTweens.push(gsap.to(dot, { y: gsap.utils.random(-90, -160), x: gsap.utils.random(-20, 20), opacity: gsap.utils.random(0.15, 0.85), duration: gsap.utils.random(4, 7.5), repeat: -1, yoyo: true, ease: 'sine.inOut', delay: gsap.utils.random(0, 3) }));
+      }
+    }
+
+    function stopIntroIdleAnimations() {
+      idleTweens.forEach(t => t.kill());
+      idleTweens = [];
+      gsap.to('#envelope-wrapper', { y: 0, duration: 0.3, ease: 'power2.out' });
+    }
+
+    // ===== 4. WELCOME TIMELINE =====
+    function playWelcomeAnimation() {
+      const tapBtn = document.getElementById('tap-open-btn');
+      const skipBtn = document.getElementById('skip-intro-btn');
+      if (tapBtn.disabled) return;
+      tapBtn.disabled = true;
+
+      if (navigator.vibrate) navigator.vibrate(15);
+      stopIntroIdleAnimations();
+
+      if (prefersReducedMotion) {
+        finishWelcomeHandoff();
+        return;
+      }
+
+      prepareSvgStroke(document.getElementById('arch-outer-stroke'));
+      prepareSvgStroke(document.getElementById('arch-inner-stroke'));
+      document.querySelectorAll('.hero-div-stroke').forEach(prepareSvgStroke);
+
+      gsap.set(['#lantern-left', '#lantern-right'], { y: -200, opacity: 0 });
+
+      gsap.to(skipBtn, { opacity: 0.9, duration: 0.4, delay: 1.5, onStart: () => { skipBtn.style.pointerEvents = 'auto'; } });
+
+      const tl = gsap.timeline({ onComplete: finishWelcomeHandoff });
+      welcomeTimeline = tl;
+
+      tl.to(tapBtn, { scale: 0.94, opacity: 0, duration: 0.3, ease: 'power2.out' }, 0);
+      tl.to('#cordially-label', { opacity: 0, y: -10, duration: 0.3, ease: 'power2.out' }, 0);
+      tl.to('#envelope-wrapper', { scale: 0.95, rotationX: 8, y: 6, duration: 0.18, ease: 'power2.in' }, 0);
+      
+      tl.to('#seal-crack-line', { opacity: 1, duration: 0.08, ease: 'power1.in' }, 0.12);
+      tl.to('#envelope-wrapper', { x: '+=4', yoyo: true, repeat: 5, duration: 0.035, ease: 'none' }, 0.12);
+
+      tl.to('#envelope-wrapper', { scale: 1.04, rotationX: -4, x: 0, y: -4, duration: 0.32, ease: 'back.out(2)' }, 0.22);
+      tl.to('#seal-ripple-ring', { scale: 2.8, opacity: 0.95, duration: 0.25, ease: 'power1.out' }, 0.2);
+      tl.to('#seal-ripple-ring', { scale: 3.8, opacity: 0, duration: 0.38, ease: 'power2.out' }, 0.42);
+      tl.to('#seal-warm-pulse', { scale: 2.2, opacity: 1, duration: 0.22, ease: 'power2.out' }, 0.2);
+      tl.to(['#seal-warm-pulse', '#seal-crack-line', '#seal-glow-breathing'], { scale: 2.8, opacity: 0, duration: 0.35, ease: 'power2.in' }, 0.38);
+
+      tl.call(() => spawnSealGoldFlecks(), null, 0.22);
+
+      tl.to('#seal-left', { x: -46, y: 64, rotation: -38, scale: 0.85, opacity: 0, duration: 0.52, ease: 'back.in(1.4)' }, 0.22);
+      tl.to('#seal-right', { x: 46, y: 68, rotation: 42, scale: 0.85, opacity: 0, duration: 0.52, ease: 'back.in(1.4)' }, 0.22);
+
+      tl.to('#envelope-flap', { rotationX: 180, duration: 0.98, ease: 'power3.inOut' }, 0.5);
+      tl.to('#envelope-wrapper', { scale: 1, rotationX: 0, y: 12, duration: 0.85, ease: 'power2.out' }, 0.58);
+      tl.set('#envelope-flap', { zIndex: 3 }, 0.98);
+
+      tl.to('#envelope-god-rays', { opacity: 0.9, scale: 1.25, rotation: 45, duration: 1.4, ease: 'power2.out' }, 0.95);
+      tl.to('#envelope-god-rays', { opacity: 0, scale: 1.6, duration: 0.7, ease: 'power1.in' }, 2.4);
+      tl.to('#envelope-light-burst', { scale: 1.95, opacity: 1, duration: 0.55, ease: 'power2.out' }, 1.0);
+      tl.to('#envelope-light-burst', { opacity: 0, scale: 2.4, duration: 0.55, ease: 'power1.in' }, 1.55);
+
+      tl.call(() => spawnEnvelopeSparkles(), null, 1.05);
+
+      tl.fromTo('#rising-card', { y: 0, scale: 0.88, rotation: -3.5 }, { y: -112, scale: 1.04, rotation: 0, boxShadow: '0 26px 55px rgba(14, 2, 5, 0.65), 0 0 25px rgba(243, 229, 171, 0.35)', duration: 1.45, ease: 'back.out(1.35)' }, 1.28);
+      tl.to('#card-calligraphy-wrap', { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power2.inOut' }, 2.4);
+
+      tl.call(() => startBackgroundMusicFade(), null, 3.0);
+
+      tl.to(['.envelope-back', '.envelope-pocket', '#envelope-flap', '#envelope-shadow'], { y: 150, opacity: 0, duration: 0.95, ease: 'power3.in' }, 3.2);
+      tl.to('#rising-card', { y: 0, scale: 4.5, opacity: 0, duration: 1.35, ease: 'power3.inOut' }, 3.25);
+      tl.to('#cream-wipe', { scale: 32, opacity: 1, duration: 1.25, ease: 'power2.inOut' }, 3.3);
+
+      tl.call(() => burstAndFallPetals(), null, 3.8);
+
+      tl.to('#intro-screen', { opacity: 0, duration: 0.45, ease: 'power1.out', onComplete: () => { document.getElementById('intro-screen').style.pointerEvents = 'none'; } }, 4.3);
+
+      tl.to(['#arch-outer-stroke', '#arch-inner-stroke'], { strokeDashoffset: 0, duration: 1.2, ease: 'power2.inOut' }, 4.4);
+      tl.to('#arch-fill-path', { fillOpacity: 0.85, duration: 0.7, ease: 'power1.out' }, 4.9);
+      tl.to('#arch-peak-ornament', { opacity: 1, duration: 0.5 }, 5.1);
+
+      tl.to(['#lantern-left', '#lantern-right'], { y: 0, opacity: 1, duration: 1.0, stagger: 0.12, ease: 'elastic.out(1, 0.5)' }, 5.0);
+
+      tl.to('#bismillah-box', { opacity: 1, duration: 0.45, ease: 'power2.out' }, 5.2);
+      tl.to('.invite-line', { opacity: 1, y: 0, duration: 0.42, stagger: 0.12, ease: 'power2.out' }, 5.3);
+      tl.to('#bride-name-wipe', { clipPath: 'inset(0 0% 0 0)', duration: 0.6, ease: 'power2.inOut' }, 5.75);
+      tl.to('#hero-ampersand', { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.2)' }, 6.05);
+      tl.to('#groom-name-wipe', { clipPath: 'inset(0 0% 0 0)', duration: 0.6, ease: 'power2.inOut' }, 6.2);
+      tl.to('.hero-div-stroke', { strokeDashoffset: 0, duration: 0.5, ease: 'power2.out' }, 6.4);
+      tl.to('#hero-cta-box', { opacity: 1, duration: 0.55, ease: 'power2.out' }, 6.45);
+    }
+
+    function finishWelcomeHandoff() {
+      const introScreen = document.getElementById('intro-screen');
+      if (introScreen) introScreen.style.display = 'none';
+
+      gsap.set(['#arch-outer-stroke', '#arch-inner-stroke', '.hero-div-stroke'], { strokeDashoffset: 0 });
+      gsap.set('#arch-fill-path', { fillOpacity: 0.85 });
+      gsap.set(['#arch-peak-ornament', '#bismillah-box', '#hero-cta-box'], { opacity: 1 });
+      gsap.set('.invite-line', { opacity: 1, y: 0 });
+      gsap.set(['#bride-name-wipe', '#groom-name-wipe'], { clipPath: 'inset(0 0% 0 0)' });
+      gsap.set('#hero-ampersand', { opacity: 1, scale: 1 });
+      gsap.set(['#lantern-left', '#lantern-right'], { y: 0, opacity: 1 });
+
+      document.body.classList.remove('locked');
+      ScrollTrigger.refresh();
+      startHeroIdleLoops();
+    }
+
+    function startHeroIdleLoops() {
+      if (prefersReducedMotion) return;
+      gsap.fromTo('#lantern-left', { rotation: -2.5 }, { rotation: 2.5, duration: 3.2, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+      gsap.fromTo('#lantern-right', { rotation: 2.2 }, { rotation: -2.2, duration: 3.6, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+      gsap.to('.lantern-flame, .lantern-halo', { opacity: () => gsap.utils.random(0.7, 1), duration: 0.35, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    }
+
+    // ===== 5. SCROLL ANIMATIONS =====
+    function setupScrollAnimations() {
+      const saveDateRect = document.getElementById('save-date-rect-stroke');
+      const dateChars = splitTextIntoChars(document.getElementById('stagger-date-text'));
+      const quoteWords = splitTextIntoWords(document.getElementById('closing-quote'));
+
+      if (prefersReducedMotion) {
+        gsap.set('.section-title-wipe', { clipPath: 'inset(0 0% 0 0)' });
+        gsap.set(dateChars, { opacity: 1, y: 0 });
+        gsap.set(quoteWords, { opacity: 1, y: 0 });
+        gsap.set('.event-btn-wrap', { opacity: 1, y: 0 });
+        gsap.set('#palace-fills', { opacity: 1 });
+        return;
+      }
+
+      gsap.to('#scroll-progress', {
+        scaleX: 1,
+        ease: 'none',
+        scrollTrigger: { trigger: '#main-invitation', start: 'top top', end: 'bottom bottom', scrub: 0.2 }
+      });
+
+      gsap.to(['#hero-floral-tl', '#hero-floral-br'], {
+        yPercent: 25,
+        ease: 'none',
+        scrollTrigger: { trigger: '#hero-section', start: 'top top', end: 'bottom top', scrub: true }
+      });
+
+      gsap.to('#hero-arch-wrapper', {
+        y: 25,
+        ease: 'none',
+        scrollTrigger: { trigger: '#hero-section', start: 'top top', end: 'bottom top', scrub: true }
+      });
+
+      document.querySelectorAll('.wedding-section').forEach(section => {
+        const titleWipe = section.querySelector('.section-title-wipe');
+        const divLines = section.querySelectorAll('.sec-div-line');
+        const centerSparkle = section.querySelector('.divider-center-sparkle');
+
+        divLines.forEach(prepareSvgStroke);
+
+        const headerTl = gsap.timeline({ scrollTrigger: { trigger: section, start: 'top 82%', once: true } });
+        headerTl.to(titleWipe, { clipPath: 'inset(0 0% 0 0)', duration: 0.85, ease: 'power2.inOut' }, 0);
+        headerTl.to(divLines, { strokeDashoffset: 0, duration: 0.65, ease: 'power2.out' }, 0.25);
+        headerTl.to(centerSparkle, { scale: 1, rotation: 90, duration: 0.45, ease: 'back.out(2.4)' }, 0.45);
+      });
+
+      prepareSvgStroke(saveDateRect);
+
+      const saveDateTl = gsap.timeline({ scrollTrigger: { trigger: '#save-date-card', start: 'top 84%', once: true } });
+      saveDateTl.from('#save-date-card', { y: 28, opacity: 0, duration: 0.7, ease: 'power2.out' }, 0);
+      saveDateTl.to(saveDateRect, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' }, 0.15);
+      saveDateTl.to(dateChars, { opacity: 1, y: 0, duration: 0.35, stagger: 0.025, ease: 'power2.out' }, 0.35);
+
+      ScrollTrigger.create({
+        trigger: '#countdown-grid',
+        start: 'top 86%',
+        once: true,
+        onEnter: () => animateCountdownFirstView()
+      });
+
+      gsap.to('#timeline-line-progress', {
+        scaleY: 1,
+        ease: 'none',
+        scrollTrigger: { trigger: '#timeline-container', start: 'top 70%', end: 'bottom 70%', scrub: true }
+      });
+
+      document.querySelectorAll('.itinerary-item').forEach((item) => {
+        const side = item.getAttribute('data-side');
+        const startX = side === 'left' ? -36 : 36;
+        const startRot = side === 'left' ? -2 : 2;
+
+        const card = item.querySelector('.event-card');
+        const dot = item.querySelector('.timeline-dot');
+        const accent = item.querySelector('.event-card-accent');
+        const iconWrap = item.querySelector('.event-icon-wrap');
+        const iconStrokes = item.querySelectorAll('.icon-stroke');
+        const btnWrap = item.querySelector('.event-btn-wrap');
+
+        iconStrokes.forEach(prepareSvgStroke);
+
+        const itemTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 82%',
+            once: true,
+            onEnter: () => dot.classList.add('active')
+          }
+        });
+
+        itemTl.from(card, { x: startX, rotation: startRot, opacity: 0, duration: 0.85, ease: 'power3.out' }, 0);
+        itemTl.to(accent, { scaleX: 1, duration: 0.65, ease: 'power2.inOut' }, 0.2);
+        itemTl.to(iconStrokes, { strokeDashoffset: 0, duration: 0.75, ease: 'power2.out' }, 0.3);
+        itemTl.from(iconWrap, { scale: 0.75, duration: 0.5, ease: 'back.out(2)' }, 0.3);
+        itemTl.to(btnWrap, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.52);
+      });
+
+      const palaceStrokes = document.querySelectorAll('#palace-strokes path, #palace-strokes line, #palace-strokes rect, #palace-strokes circle');
+      palaceStrokes.forEach(prepareSvgStroke);
+
+      const palaceTl = gsap.timeline({ scrollTrigger: { trigger: '#palace-stage', start: 'top 80%', once: true } });
+      palaceTl.to(palaceStrokes, { strokeDashoffset: 0, duration: 1.5, stagger: 0.02, ease: 'power2.inOut' }, 0);
+      palaceTl.to('#palace-fills', { opacity: 1, duration: 0.8, ease: 'power1.out' }, 0.9);
+      palaceTl.fromTo('#palace-birds-flock', { x: -60, y: 12, opacity: 0 }, { x: 260, y: -18, opacity: 0.85, duration: 4.5, ease: 'power1.out' }, 0.2);
+
+      gsap.to(quoteWords, {
+        opacity: 1, y: 0, duration: 0.4, stagger: 0.045, ease: 'power2.out',
+        scrollTrigger: { trigger: '#closing-quote', start: 'top 85%', once: true }
+      });
+    }
+
+    // ===== 6. COUNTDOWN =====
+    function getRemainingTimeParts() {
+      const target = new Date(WEDDING_CONFIG.weddingDateISO).getTime();
+      const now = Date.now();
+      const diff = Math.max(0, target - now);
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / 1000 / 60) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+
+      return {
+        days: String(days).padStart(2, '0'),
+        hours: String(hours).padStart(2, '0'),
+        mins: String(mins).padStart(2, '0'),
+        secs: String(secs).padStart(2, '0')
+      };
+    }
+
+    function rollDigitElement(elementId, newValue) {
+      const el = document.getElementById(elementId);
+      if (!el || el.textContent === newValue) return;
+
+      if (prefersReducedMotion) {
+        el.textContent = newValue;
+        return;
+      }
+
+      gsap.to(el, {
+        y: -20, opacity: 0, duration: 0.2, ease: 'power2.in',
+        onComplete: () => {
+          el.textContent = newValue;
+          gsap.fromTo(el, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: 'back.out(1.6)' });
+        }
+      });
+    }
+
+    function animateCountdownFirstView() {
+      const real = getRemainingTimeParts();
+      const proxy = { d: 0, h: 0, m: 0, s: 0 };
+
+      gsap.to(proxy, {
+        d: parseInt(real.days, 10),
+        h: parseInt(real.hours, 10),
+        m: parseInt(real.mins, 10),
+        s: parseInt(real.secs, 10),
+        duration: 1.2,
+        ease: 'power2.out',
+        onUpdate: () => {
+          document.getElementById('cd-days').textContent = String(Math.round(proxy.d)).padStart(2, '0');
+          document.getElementById('cd-hours').textContent = String(Math.round(proxy.h)).padStart(2, '0');
+          document.getElementById('cd-mins').textContent = String(Math.round(proxy.m)).padStart(2, '0');
+          document.getElementById('cd-secs').textContent = String(Math.round(proxy.s)).padStart(2, '0');
+        },
+        onComplete: () => { countdownValues = real; }
+      });
+    }
+
+    function startCountdown() {
+      countdownValues = getRemainingTimeParts();
+      document.getElementById('cd-days').textContent = countdownValues.days;
+      document.getElementById('cd-hours').textContent = countdownValues.hours;
+      document.getElementById('cd-mins').textContent = countdownValues.mins;
+      document.getElementById('cd-secs').textContent = countdownValues.secs;
+
+      setInterval(() => {
+        if (document.hidden) return;
+        const next = getRemainingTimeParts();
+
+        if (next.days !== countdownValues.days) rollDigitElement('cd-days', next.days);
+        if (next.hours !== countdownValues.hours) rollDigitElement('cd-hours', next.hours);
+        if (next.mins !== countdownValues.mins) rollDigitElement('cd-mins', next.mins);
+        if (next.secs !== countdownValues.secs) {
+          rollDigitElement('cd-secs', next.secs);
+          if (!prefersReducedMotion) {
+            gsap.fromTo('#cd-secs-box',
+              { boxShadow: '0 6px 18px rgba(74, 13, 29, 0.07), 0 0 14px rgba(201, 161, 91, 0.55)' },
+              { boxShadow: '0 6px 18px rgba(74, 13, 29, 0.07), 0 0 0px rgba(201, 161, 91, 0)', duration: 0.65 }
+            );
+          }
+        }
+        countdownValues = next;
+      }, 1000);
+    }
+
+    // ===== 7. PARTICLES =====
+    function spawnSealGoldFlecks() {
+      const stage = document.getElementById('seal-assembly');
+      for (let i = 0; i < 9; i++) {
+        const fleck = document.createElement('div');
+        fleck.className = 'gold-dust-dot';
+        const size = gsap.utils.random(3, 6);
+        fleck.style.width = size + 'px';
+        fleck.style.height = size + 'px';
+        fleck.style.left = '34px';
+        fleck.style.top = '34px';
+        stage.appendChild(fleck);
+
+        const angle = (i / 9) * Math.PI * 2 + gsap.utils.random(-0.3, 0.3);
+        const dist = gsap.utils.random(35, 75);
+
+        gsap.to(fleck, {
+          x: Math.cos(angle) * dist,
+          y: Math.sin(angle) * dist + 15,
+          scale: 0,
+          opacity: 0,
+          duration: gsap.utils.random(0.45, 0.65),
+          ease: 'power2.out',
+          onComplete: () => fleck.remove()
+        });
+      }
+    }
+
+    function spawnEnvelopeSparkles() {
+      const wrapper = document.getElementById('envelope-wrapper');
+      for (let i = 0; i < 18; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'gold-dust-dot';
+        const size = gsap.utils.random(2.5, 5);
+        spark.style.width = size + 'px';
+        spark.style.height = size + 'px';
+        spark.style.left = gsap.utils.random(20, 80) + '%';
+        spark.style.top = '45%';
+        spark.style.zIndex = '9';
+        wrapper.appendChild(spark);
+
+        gsap.to(spark, {
+          y: gsap.utils.random(-70, -165),
+          x: gsap.utils.random(-45, 45),
+          opacity: 0,
+          scale: gsap.utils.random(0.4, 1.3),
+          duration: gsap.utils.random(0.7, 1.15),
+          ease: 'power2.out',
+          delay: gsap.utils.random(0, 0.2),
+          onComplete: () => spark.remove()
+        });
+      }
+    }
+
+    function createPetalElement(sizeClass) {
+      const div = document.createElement('div');
+      div.className = `rose-petal-item ${sizeClass}`;
+      div.innerHTML = `
+        <svg viewBox="0 0 24 30" width="100%" height="100%">
+          <path d="M12,1 C19,7 23,15 21,23 C19,28 15,30 12,29 C9,30 5,28 3,23 C1,15 5,7 12,1 Z" fill="url(#petalRoseGrad)" />
+          <path d="M12,4 Q14,15 11,26" fill="none" stroke="#ead8d0" stroke-width="0.7" stroke-opacity="0.45" />
+        </svg>
+      `;
+      return div;
+    }
+
+    function burstAndFallPetals() {
+      if (prefersReducedMotion) return;
+      const stage = document.getElementById('petal-stage');
+      stage.innerHTML = '';
+
+      const sizes = ['small', 'medium', 'large'];
+      const viewW = Math.min(window.innerWidth, 480);
+      const viewH = window.innerHeight;
+
+      for (let i = 0; i < WEDDING_CONFIG.maxPetals; i++) {
+        const sizeClass = sizes[i % sizes.length];
+        const petal = createPetalElement(sizeClass);
+        stage.appendChild(petal);
+
+        const startX = viewW / 2;
+        const startY = viewH / 2;
+        const burstX = startX + gsap.utils.random(-viewW * 0.45, viewW * 0.45);
+        const burstY = startY + gsap.utils.random(-viewH * 0.4, viewH * 0.15);
+
+        gsap.set(petal, { x: startX, y: startY, scale: 0.2, opacity: 0 });
+
+        gsap.to(petal, {
+          x: burstX, y: burstY, scale: 1,
+          opacity: sizeClass === 'small' ? 0.55 : 0.9,
+          rotationZ: gsap.utils.random(-120, 120),
+          rotationX: gsap.utils.random(-60, 60),
+          duration: gsap.utils.random(0.85, 1.25),
+          ease: 'power3.out',
+          onComplete: () => { startContinuousPetalFall(petal, burstX, burstY, viewW, viewH, true); }
+        });
+      }
+    }
+
+    function startContinuousPetalFall(petal, currentX, currentY, viewW, viewH, firstPass) {
+      const startX = firstPass ? currentX : gsap.utils.random(10, viewW - 30);
+      const startY = firstPass ? currentY : gsap.utils.random(-80, -20);
+      const fallDuration = gsap.utils.random(7, 12);
+
+      gsap.set(petal, { x: startX, y: startY });
+
+      const fallTween = gsap.to(petal, {
+        y: viewH + 50, duration: fallDuration, ease: 'none',
+        onComplete: () => { startContinuousPetalFall(petal, 0, 0, viewW, viewH, false); }
+      });
+
+      const swayTween = gsap.to(petal, {
+        x: startX + gsap.utils.random(-50, 50),
+        rotationX: gsap.utils.random(120, 260),
+        rotationY: gsap.utils.random(120, 260),
+        rotationZ: '+=' + gsap.utils.random(60, 140),
+        duration: gsap.utils.random(2.2, 3.6),
+        repeat: Math.ceil(fallDuration / 2.5),
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      petalTweens.push(fallTween, swayTween);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        petalTweens.forEach(t => t.pause());
+      } else {
+        petalTweens.forEach(t => t.resume());
+      }
+    });
+
+    // ===== 8. AUDIO =====
+    let bgMusic = null;
+    let isMuted = false;
+
+    function startBackgroundMusicFade() {
+      try {
+        bgMusic = new Audio(WEDDING_CONFIG.musicPath);
+        bgMusic.loop = true;
+        bgMusic.volume = 0;
+        bgMusic.play().then(() => {
+          document.getElementById('audio-toggle-btn').classList.add('visible');
+          gsap.to(bgMusic, { volume: 0.4, duration: 3.0, ease: 'power1.inOut' });
+        }).catch(() => {});
+      } catch (e) {}
+    }
+
+    function setupAudioToggle() {
+      const btn = document.getElementById('audio-toggle-btn');
+      const iconOn = document.getElementById('audio-icon-on');
+      const iconOff = document.getElementById('audio-icon-off');
+
+      btn.addEventListener('click', () => {
+        if (!bgMusic) return;
+        isMuted = !isMuted;
+        bgMusic.muted = isMuted;
+        iconOn.style.display = isMuted ? 'none' : 'block';
+        iconOff.style.display = isMuted ? 'block' : 'none';
+      });
+    }
+
+    // ===== INITIALIZATION =====
+    window.addEventListener('DOMContentLoaded', () => {
+      setupButtonRipples();
+      startIntroIdleAnimations();
+      setupScrollAnimations();
+      startCountdown();
+      setupAudioToggle();
+
+      document.getElementById('tap-open-btn').addEventListener('click', playWelcomeAnimation);
+      document.getElementById('envelope-stage').addEventListener('click', () => {
+        const tapBtn = document.getElementById('tap-open-btn');
+        if (!tapBtn.disabled) playWelcomeAnimation();
+      });
+      document.getElementById('skip-intro-btn').addEventListener('click', () => {
+        if (welcomeTimeline) welcomeTimeline.progress(1);
+        else finishWelcomeHandoff();
+      });
+    });
+  </script>
+</body>
+</html>
