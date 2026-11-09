@@ -1,4 +1,5 @@
 import { wedding } from "@/lib/wedding";
+import DuaReveal from "@/components/DuaReveal";
 
 export default function Closing() {
   return (
@@ -19,7 +20,23 @@ export default function Closing() {
 
       <div className="palace-stage" id="palace-stage">
         <div className="palace-sunset-glow" aria-hidden="true"></div>
+        <div className="palace-light-bloom" id="palace-light-bloom" aria-hidden="true"></div>
         <svg className="palace-svg" viewBox="0 0 400 220" aria-hidden="true">
+          <g id="palace-windows" fill="#f7d774" fillOpacity="0">
+            <path d="M182,160 A10,10 0 0 1 202,160 L202,188 L182,188 Z" />
+            <g>
+              <path d="M122,135 A6,6 0 0 1 134,135 L134,155 L122,155 Z" />
+              <path d="M122,168 A6,6 0 0 1 134,168 L134,188 L122,188 Z" />
+              <path d="M266,135 A6,6 0 0 1 278,135 L278,155 L266,155 Z" />
+              <path d="M266,168 A6,6 0 0 1 278,168 L278,188 L266,188 Z" />
+            </g>
+            <g>
+              <path d="M82,142 A5.5,5.5 0 0 1 93,142 L93,162 L82,162 Z" />
+              <path d="M82,172 A5.5,5.5 0 0 1 93,172 L93,190 L82,190 Z" />
+              <path d="M307,142 A5.5,5.5 0 0 1 318,142 L318,162 L307,162 Z" />
+              <path d="M307,172 A5.5,5.5 0 0 1 318,172 L318,190 L307,190 Z" />
+            </g>
+          </g>
           <g id="palace-fills" opacity="0">
             <path d="M70,195 L70,110 L110,110 L110,95 L155,95 L155,75 L245,75 L245,95 L290,95 L290,110 L330,110 L330,195 Z" fill="#ead8d0" />
             <path d="M168,75 C168,42 200,28 200,20 C200,28 232,42 232,75 Z" fill="#f3e5ab" opacity="0.55" />
@@ -47,6 +64,8 @@ export default function Closing() {
         <div className="compliments-label">Best Compliments From</div>
         <div className="compliments-names">Family &amp; Relatives</div>
       </div>
+
+      <DuaReveal />
     </section>
   );
 }

@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import ScrollEffects from "@/components/ScrollEffects";
 import ScrollProgress from "@/components/ScrollProgress";
 import Petals from "@/components/Petals";
+import SkyLanterns from "@/components/SkyLanterns";
 import AudioToggle from "@/components/AudioToggle";
 import { SharedSvgDefs } from "@/components/Ornaments";
 
@@ -24,6 +25,7 @@ export default function Home() {
       </svg>
       <SharedSvgDefs />
       <Petals />
+      <SkyLanterns />
       <IntroScreen />
 
       <main className="phone-viewport" id="main-invitation">

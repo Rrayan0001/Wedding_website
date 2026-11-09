@@ -38,6 +38,8 @@ export default function ScrollEffects() {
         gsap.set(quoteWords, { opacity: 1, y: 0 });
         gsap.set(".event-btn-wrap", { opacity: 1, y: 0 });
         gsap.set("#palace-fills", { opacity: 1 });
+        gsap.set("#palace-windows path", { fillOpacity: 0.9 });
+        gsap.set("#palace-light-bloom", { opacity: 1 });
         return;
       }
       gsap.to(["#hero-floral-tl", "#hero-floral-br"], {
@@ -84,10 +86,16 @@ export default function ScrollEffects() {
       });
       const palaceStrokes = document.querySelectorAll("#palace-strokes path, #palace-strokes line, #palace-strokes rect, #palace-strokes circle");
       palaceStrokes.forEach((el) => prepareSvgStroke(el));
+      const windows = document.querySelectorAll("#palace-windows path");
       const palaceTl = gsap.timeline({ scrollTrigger: { trigger: "#palace-stage", start: "top 80%", once: true } });
       palaceTl.to(palaceStrokes, { strokeDashoffset: 0, duration: 1.5, stagger: 0.02, ease: "power2.inOut" }, 0);
       palaceTl.to("#palace-fills", { opacity: 1, duration: 0.8, ease: "power1.out" }, 0.9);
       palaceTl.fromTo("#palace-birds-flock", { x: -60, y: 12, opacity: 0 }, { x: 260, y: -18, opacity: 0.85, duration: 4.5, ease: "power1.out" }, 0.2);
+      palaceTl.fromTo("#palace-light-bloom", { opacity: 0, scale: 0.55 }, { opacity: 1, scale: 1, transformOrigin: "50% 75%", duration: 1.6, ease: "power2.out" }, 1.1);
+      palaceTl.to(windows, { fillOpacity: 0.95, duration: 0.7, stagger: 0.13, ease: "power2.out" }, 1.35);
+      palaceTl.to(windows, { fillOpacity: 0.8, duration: 1.6, stagger: 0.1, yoyo: true, repeat: 3, ease: "sine.inOut" }, "+=0.2");
+      palaceTl.fromTo("#palace-fills", { filter: "brightness(1)" }, { filter: "brightness(1.18)", duration: 1.2, yoyo: true, repeat: 1, ease: "sine.inOut" }, 1.2);
+      palaceTl.to("#palace-birds-flock", { opacity: 0.35, duration: 0.9, yoyo: true, repeat: 2, ease: "sine.inOut" }, 4.6);
       gsap.to(quoteWords, {
         opacity: 1, y: 0, duration: 0.4, stagger: 0.045, ease: "power2.out",
         scrollTrigger: { trigger: "#closing-quote", start: "top 85%", once: true },

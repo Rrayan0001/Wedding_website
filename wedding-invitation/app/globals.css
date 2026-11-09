@@ -1429,6 +1429,198 @@
       pointer-events: none;
     }
 
+  /* ===== 8. SKY LANTERN DRIFT ===== */
+    #sky-lantern-stage {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 3;
+      overflow: hidden;
+    }
+
+    .sky-lantern-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc(26px * var(--sl-scale, 1));
+      height: calc(65px * var(--sl-scale, 1));
+      pointer-events: none;
+      opacity: 0;
+      filter: drop-shadow(0 0 8px rgba(243, 229, 171, 0.35));
+      will-change: transform, opacity;
+    }
+
+  /* ===== 9. PETALS — JASMINE & DUST sizing ===== */
+    .jasmine-bud-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .jasmine-bud-item.small {
+      width: 10px;
+      height: 11px;
+      filter: blur(0.6px);
+      opacity: 0.5;
+    }
+
+    .jasmine-bud-item.medium {
+      width: 13px;
+      height: 14.5px;
+      opacity: 0.78;
+    }
+
+    .jasmine-bud-item.large {
+      width: 16px;
+      height: 18px;
+      opacity: 0.88;
+      filter: drop-shadow(0 1px 3px rgba(44, 6, 16, 0.2));
+    }
+
+  /* ===== 10. PALACE ILLUMINATION ===== */
+    .palace-light-bloom {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      width: 300px;
+      height: 170px;
+      margin-left: -150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(243, 229, 171, 0.5) 0%, rgba(201, 161, 91, 0.2) 48%, transparent 72%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      filter: blur(2px);
+    }
+
+    #palace-windows path {
+      stroke: rgba(138, 32, 57, 0.35);
+      stroke-width: 0.8;
+    }
+
+  /* ===== 11. DUA SEALED MEDALLION ===== */
+    .dua-reveal {
+      max-width: 335px;
+      margin: 4px auto 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .dua-caption {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 13.5px;
+      letter-spacing: 0.04em;
+      color: var(--gold-light);
+      opacity: 0.85;
+      margin: 0 auto 14px;
+    }
+
+    .dua-seal-btn {
+      position: relative;
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 6px;
+      display: block;
+      padding: 4px;
+      border: none;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: box-shadow 0.45s ease, filter 0.45s ease;
+      will-change: transform, opacity;
+    }
+
+    .dua-seal-btn .dua-seal-face {
+      position: absolute;
+      inset: 0;
+      will-change: transform;
+    }
+
+    .dua-seal-btn .dua-seal-face svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .dua-seal-btn:hover:not(:disabled),
+    .dua-seal-btn:focus-visible:not(:disabled) {
+      box-shadow: 0 0 20px rgba(243, 229, 171, 0.4);
+      filter: brightness(1.12);
+      outline: none;
+    }
+
+    .dua-seal-btn:disabled {
+      cursor: default;
+    }
+
+    .dua-seal-btn[aria-expanded="true"] {
+      pointer-events: none;
+    }
+
+    .dua-card {
+      opacity: 0;
+      visibility: hidden;
+      position: relative;
+      background: linear-gradient(160deg, #efe4cf 0%, #f6efdf 55%, #eadfc6 100%);
+      border: 1px solid var(--gold);
+      border-radius: 10px;
+      padding: 22px 18px 18px;
+      box-shadow: 0 10px 26px rgba(44, 6, 16, 0.35), inset 0 0 22px rgba(201, 161, 91, 0.16);
+    }
+
+    .dua-card-accent {
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 112px;
+      height: 18px;
+      background: radial-gradient(ellipse at 50% 100%, var(--burgundy-deep) 55%, transparent 56%);
+      border-bottom: 1.5px solid var(--gold);
+    }
+
+    .dua-ar {
+      font-family: 'Lateef', 'Scheherazade New', 'Amiri', serif;
+      font-size: 25px;
+      line-height: 1.85;
+      margin: 4px 0 8px;
+      color: #5a1022;
+    }
+
+    .dua-tr {
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      font-style: italic;
+      letter-spacing: 0.03em;
+      color: #7a2136;
+      margin: 0 0 10px;
+    }
+
+    .dua-en {
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #3a0814;
+      margin: 0 0 10px;
+    }
+
+    .dua-source {
+      font-family: 'Cinzel', serif;
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #8c6d33;
+      margin: 0;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;

@@ -27,6 +27,11 @@ export function SharedSvgDefs() {
           <stop offset="55%" stopColor="#8a2039" />
           <stop offset="100%" stopColor="#4a0d1d" />
         </linearGradient>
+        <linearGradient id="jasmineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#fdf8ec" />
+          <stop offset="60%" stopColor="#f3e9d4" />
+          <stop offset="100%" stopColor="#d9c8a8" />
+        </linearGradient>
         <symbol id="sparkle-star" viewBox="0 0 24 24">
           <path d="M12 0 C13.5 8.5 15.5 10.5 24 12 C15.5 13.5 13.5 15.5 12 24 C10.5 15.5 8.5 13.5 0 12 C8.5 10.5 10.5 8.5 12 0 Z" />
         </symbol>
