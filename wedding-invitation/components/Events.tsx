@@ -21,7 +21,7 @@ export default function Events() {
       <div className="timeline-container" id="timeline-container">
         <div className="timeline-track-bg" aria-hidden="true"></div>
         <div className="timeline-line-progress" id="timeline-line-progress" aria-hidden="true"></div>
-        {wedding.events.map((event, index) => (
+        {wedding.events.map((event) => (
           <div className="itinerary-item" data-side={event.side} key={event.kind}>
             <div className="timeline-dot"></div>
             <article className="event-card">
@@ -34,7 +34,6 @@ export default function Events() {
                 {event.datetime}
                 <br />
                 {event.datetimeSuffix}
-                {index === 1 ? (<><br /><span style={{ fontWeight: 400, fontStyle: "italic", fontSize: "15.5px" }}>Lunch thereafter</span></>) : null}
               </p>
               <p className="event-venue-name">{event.venueName}</p>
               <p className="event-venue-address">
